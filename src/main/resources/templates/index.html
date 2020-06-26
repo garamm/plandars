@@ -1,38 +1,61 @@
 <!DOCTYPE html>
 <style>
+    @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
     html {
         height: 100%;
+        overflow: hidden;
+        font-family: 'Nanum Gothic';
     }
 
     body {
         height: 100%;
+        overflow: hidden;
         margin: 0;
+        padding: 0;
         position: relative;
     }
 
-    #calendar {
-        height: 99%;
-        box-sizing: border-box;
-        padding: 0.5%;
+    #app {
+        height: 100%;
+        padding: 1%;
+        overflow: hidden;
+        position: relative;
     }
 
-    .calendar__day {
+    .calendar_wrap {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .calendar_row {
         display: inline-block;
-        vertical-align: bottom;
-        width: calc(97% / 7);
-        height: calc(98% / 5);
-        box-sizing: border-box;
-        border-radius: 5px;
-        padding: 20px;
+        width: 100%;
     }
 
-    .horizontalGutter {
-        margin-right: 0.5%;
+    .calendar_cell {
+        display: inline-block;
+        width: calc(100% /7);
+        padding: 1%;
+        border: 1px solid #ccc;
+        height: 100%;
     }
 
-    .verticalGutter {
-        margin-top: 0.5%;
+    .calendar_header {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
     }
+
+    .calendar_week5 {
+        height: clac(100% / 5);
+    }
+
+    .calendar_week6 {
+        height: clac(100% / 6);
+    }
+
 </style>
 
 <head>
@@ -51,145 +74,154 @@
 <body>
 
     <div id="app">
+
+        <div class="calendar_wrap">
+            <!-- 헤더 -->
+            <div class="calendar_header">
+                <span style="font-size: 20px; font-weight: bold;">{{ this.selectedYear }} / {{ this.selectedMonth }}</span>
+            </div>
+            <!-- 요일 -->
+            <div class="calendar_row">
+                <div v-for="rows in weekList" class="calendar_cell">
+                    {{ rows }}
+                </div>
+            </div>
+            <!-- 일자 -->
+            <div>
+                <div v-for="rows in calendarGrid" class="calendar_row">
+                    <div v-for="item in rows" class="calendar_cell" v-if="item != null">
+                        {{ item.day }}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div id="calendar"></div>
 
 </body>
 
 
 <script>
-
-    const today = new Date();
-    const setCalendarData = (year, month) => {
-        let calHtml = "";
-        const setDate = new Date(year, month - 1, 1);
-        const firstDay = setDate.getDate();
-        const firstDayName = setDate.getDay();
-        const lastDay = new Date(
-            today.getFullYear(),
-            today.getMonth() + 1,
-            0
-        ).getDate();
-        const prevLastDay = new Date(
-            today.getFullYear(),
-            today.getMonth(),
-            0
-        ).getDate();
-
-        let startDayCount = 1;
-        let lastDayCount = 1;
-
-        for (let i = 0; i < 5; i++) {
-            for (let j = 0; j < 7; j++) {
-                if (i == 0 && j < firstDayName) {
-                    if (j == 0) {
-                        // 스타일링을 위한 클래스 추가
-                        calHtml +=
-                            `<div style='background-color:#FFB3BB;' class='calendar__day horizontalGutter'><span>${(prevLastDay - (firstDayName - 1) + j)}</span><span></span></div>`;
-                    } else if (j == 6) {
-                        // 스타일링을 위한 클래스 추가
-                        calHtml +=
-                            `<div style='background-color:#FFB3BB;' class='calendar__day'><span>${(prevLastDay - (firstDayName - 1) + j)}</span><span></span></div>`;
-                    } else {
-                        // 스타일링을 위한 클래스 추가
-                        calHtml +=
-                            `<div style='background-color:#FFB3BB;' class='calendar__day horizontalGutter'><span>${(prevLastDay - (firstDayName - 1) + j)}</span><span></span></div>`;
-                    }
-                }
-                else if (i == 0 && j == firstDayName) {
-                    if (j == 0) {
-                        // 스타일링을 위한 클래스 추가
-                        calHtml +=
-                            `<div style='background-color:#FFE0BB;' class='calendar__day horizontalGutter'><span>${startDayCount}</span><span id='${year}${month}${setFixDayCount(startDayCount++)}'></span></div>`;
-                    } else if (j == 6) {
-                        // 스타일링을 위한 클래스 추가
-                        calHtml +=
-                            `<div style='background-color:#FFE0BB;' class='calendar__day'><span>${startDayCount}</span><span id='${year}${month}${setFixDayCount(startDayCount++)}'></span></div>`;
-                    } else {
-                        // 스타일링을 위한 클래스 추가
-                        calHtml +=
-                            `<div style='background-color:#FFE0BB;' class='calendar__day horizontalGutter'><span>${startDayCount}</span><span id='${year}${month}${setFixDayCount(startDayCount++)}'></span></div>`;
-                    }
-                }
-                else if (i == 0 && j > firstDayName) {
-                    if (j == 0) {
-                        // 스타일링을 위한 클래스 추가
-                        calHtml +=
-                            `<div style='background-color:#FFFFBB' class='calendar__day horizontalGutter'><span>${startDayCount}</span><span id='${year}${month}${setFixDayCount(startDayCount++)}'></span></div>`;
-                    } else if (j == 6) {
-                        // 스타일링을 위한 클래스 추가
-                        calHtml +=
-                            `<div style='background-color:#FFFFBB' class='calendar__day'><span>${startDayCount}</span><span id='${year}${month}${setFixDayCount(startDayCount++)}'></span></div>`;
-                    } else {
-                        // 스타일링을 위한 클래스 추가
-                        calHtml +=
-                            `<div style='background-color:#FFFFBB' class='calendar__day horizontalGutter'><span>${startDayCount}</span><span id='${year}${month}${setFixDayCount(startDayCount++)}'></span></div>`;
-                    }
-                }
-                else if (i > 0 && startDayCount <= lastDay) {
-                    if (j == 0) {
-                        // 스타일링을 위한 클래스 추가
-                        calHtml +=
-                            `<div style='background-color:#BBFFC9;'class='calendar__day horizontalGutter verticalGutter'><span>${startDayCount}</span><span id='${year}${month}${setFixDayCount(startDayCount++)}'></span></div>`;
-                    } else if (j == 6) {
-                        // 스타일링을 위한 클래스 추가
-                        calHtml +=
-                            `<div style='background-color:#BBFFC9;'class='calendar__day verticalGutter'><span>${startDayCount}</span><span id='${year}${month}${setFixDayCount(startDayCount++)}'></span></div>`;
-                    } else {
-                        // 스타일링을 위한 클래스 추가
-                        calHtml +=
-                            `<div style='background-color:#BBFFC9;'class='calendar__day horizontalGutter verticalGutter'><span>${startDayCount}</span><span id='${year}${month}${setFixDayCount(startDayCount++)}'></span></div>`;
-                    }
-                }
-                else if (startDayCount > lastDay) {
-                    if (j == 0) {
-                        // 스타일링을 위한 클래스 추가
-                        calHtml +=
-                            `<div style='background-color:#B9E1FF;' class='calendar__day horizontalGutter verticalGutter'><span>${lastDayCount++}</span><span></span></div>`;
-                    } else if (j == 6) {
-                        // 스타일링을 위한 클래스 추가
-                        calHtml +=
-                            `<div style='background-color:#B9E1FF;' class='calendar__day verticalGutter'><span>${lastDayCount++}</span><span></span></div>`;
-                    } else {
-                        // 스타일링을 위한 클래스 추가
-                        calHtml +=
-                            `<div style='background-color:#B9E1FF;' class='calendar__day horizontalGutter verticalGutter'><span>${lastDayCount++}</span><span></span></div>`;
-                    }
-                }
-            }
-        }
-        document
-            .querySelector("#calendar")
-            .insertAdjacentHTML("beforeend", calHtml);
-    };
-
-    const setFixDayCount = number => {
-        let fixNum = "";
-        if (number < 10) {
-            fixNum = "0" + number;
-        } else {
-            fixNum = number;
-        }
-        return fixNum;
-    };
-
-    if (today.getMonth() + 1 < 10) {
-        setCalendarData(today.getFullYear(), "0" + (today.getMonth() + 1));
-    } else {
-        setCalendarData(today.getFullYear(), "" + (today.getMonth() + 1));
-    }
-
     new Vue({
         el: '#app',
         data: {
-
+            gridMaxCount: 7,
+            weekCount: 5, // 달력에 몇주차까지 표기할건지 저장하는 변수
+            dateList: [], // 이번달에 그릴 날짜 리스트
+            calendarGrid: [], // dateList를 그리드 형식으로 그리기 위해 사용되는 리스트
+            weekList: ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"],
+            selectedYear: 2020,
+            selectedMonth: "06",
         },
         methods: {
+            getCalendar: function (yyyy, m) {
+                this.dateList = [];
 
+                var firstDate = new Date(yyyy, m - 1, 1);
+                let lastDate = new Date(yyyy, m, 0);
+
+                // 당월 첫날의 요일 구하기 (일요일부터 시작)
+                let firstDayOfWeek = firstDate.getDay();
+                let prevDate = new Date(new Date(yyyy, m - 1, 1).setDate(new Date(yyyy, m - 1, 1).getDate() - 1));
+                let prevYear = new Date(new Date(yyyy, m - 1, 1).setDate(new Date(yyyy, m - 1, 1).getDate() - 1)).getFullYear();
+                let prevMonth = new Date(new Date(yyyy, m - 1, 1).setDate(new Date(yyyy, m - 1, 1).getDate() - 1)).getMonth() + 1;
+
+
+                // 전월 데이터 채우기
+                if (firstDayOfWeek != 0) { // 당월 1일이 일요일이 아니면 앞에 전월 데이터를 추가해야하기 때문
+                    for (var i = 0; i < firstDayOfWeek; i++) {
+                        this.dateList.unshift({
+                            year: prevYear,
+                            month: this.makeTwoString(prevMonth),
+                            day: prevDate.getDate() - i,
+                            type: "prev",
+                            holiday: ""
+                        });
+                    }
+                }
+
+                // 당월 데이터 채우기
+                for (var i = 1; i <= lastDate.getDate(); i++) {
+                    this.dateList.push({
+                        year: yyyy,
+                        month: this.makeTwoString(m),
+                        day: this.makeTwoString(i),
+                        type: "now",
+                        holiday: ""
+                    });
+                }
+
+                // 당월 마지막날의 요일 구하기 (일요일부터 시작)
+                let lastDayOfWeek = lastDate.getDay();
+                let nextDate = new Date(new Date(yyyy, m, 0).setDate(new Date(yyyy, m, 0).getDate() + 1)).getDate();
+                let nextYear = new Date(new Date(yyyy, m, 0).setDate(new Date(yyyy, m, 0).getDate() + 1)).getFullYear();
+                let nextMonth = new Date(new Date(yyyy, m, 0).setDate(new Date(yyyy, m, 0).getDate() + 1)).getMonth() + 1;
+
+                // 다음월 데이터 채우기
+                if (lastDayOfWeek != 6) { // 당월 마지막날짜가 토요일이 아니면 나머지 공간을 채워줘야하기 때문
+                    for (var i = 0; i < 6 - lastDayOfWeek; i++) {
+                        this.dateList.push({
+                            year: nextYear,
+                            month: this.makeTwoString(nextMonth),
+                            day: "0" + (i + 1),
+                            type: "next",
+                            holiday: ""
+                        });
+                    }
+                }
+
+                // 달력에 몇주까지 표기할건지 계산
+                if (this.dateList.length < 36) {
+                    weekCount = 5;
+                } else {
+                    weekCount = 6;
+                }
+
+                this.drawCalendar();
+                this.checkHoliday();
+            },
+            drawCalendar: function () {
+                var remain = this.dateList.length % this.gridMaxCount;
+                var lines = this.dateList.length / this.gridMaxCount;
+                if (remain != 0) {
+                    lines = lines + 1;
+                }
+                lines = Math.floor(lines);
+
+                for (var i = 0; i < lines; i++) {
+                    var subList = this.dateList.slice((i * this.gridMaxCount), (i * this.gridMaxCount) + this.gridMaxCount);
+                    if (subList.length < this.gridMaxCount) {
+                        var loopCount = this.gridMaxCount - subList.length;
+                        for (var j = 0; j < loopCount; j++) {
+                            subList.push(null);
+                        }
+                    }
+                    this.calendarGrid.push(subList);
+                }
+            },
+            checkHoliday: function () {
+                // axios({
+                //     method: 'get',
+                //     url: 'http://localhost/holiday.csv',
+                //     responseType: 'text/csv'
+                // })
+                //     .then(function (response) {
+                //         console.log(response.data);
+                //     })
+                //     .error(function (err) {
+                //         console.log(error);
+                //     });
+            },
+            makeTwoString: function (num) { // 한자리수 숫자 1을 두자리수 문자열 "01"로 변환
+                var temp = num;
+                if (temp < 10) {
+                    temp = "0" + num;
+                }
+                return temp;
+            }
         },
         created: function () {
-
+            this.getCalendar(this.selectedYear, parseInt(this.selectedMonth));
         },
     });
 
