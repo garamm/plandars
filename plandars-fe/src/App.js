@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import Header from './components/Header';
 import Calendar from './components/Calendar';
+import Detail from './components/Detail';
 
 class App extends React.Component {
 
@@ -9,7 +10,8 @@ class App extends React.Component {
     ttt: 'sss',
     pickYear: new Date().getFullYear(),
     pickMonth: new Date().getMonth() + 1,
-    pickDate: new Date().getDate()
+    pickDate: new Date().getDate(),
+    planList: []
   };
 
   constructor(props) {
@@ -24,13 +26,17 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        {this.state.ttt}
         <Header />
-        <Calendar
-          onUpdatePick={this.updatePick}
-          pickYear={this.state.pickYear}
-          pickMonth={this.state.pickMonth}
-          pickDate={this.state.pickDate} />
+        <div className="wrapper">
+          <Calendar
+            onUpdatePick={this.updatePick}
+            pickYear={this.state.pickYear}
+            pickMonth={this.state.pickMonth}
+            pickDate={this.state.pickDate}
+            planList={this.state.planList} />
+          <Detail />
+        </div>
+        {/* {this.state.ttt} */}
       </div>
     );
   }

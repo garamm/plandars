@@ -5,7 +5,11 @@ class Header extends React.Component {
   render() {
     return (
       <div className="Header">
-        <span>Plandars</span>
+        <div className="left">
+          <span>Plandars</span>
+          <a className="floatRight">Setting</a>
+        </div>
+        
       </div>
     );
   }

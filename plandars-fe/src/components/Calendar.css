@@ -1,0 +1,29 @@
+.dateWrapper {
+    padding: 0px;
+    margin: 0px;
+    height: calc(100% - 2em);
+}
+
+.weekWrapper {
+    border: 1px solid pink;
+}
+
+.dateItem {
+    padding: 5px;
+    float: left;
+    width: calc(100% / 7);
+}
+
+.week5 {
+    height: calc(100% / 5);
+}
+
+.week6 {
+    display: inline-block;
+    height: calc(100% / 6);
+}
+
+.CalendarItem {
+    display: inline-block;
+    height: 100%;
+}
