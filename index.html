@@ -2,7 +2,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
     <link rel="stylesheet" href="./style.css">
@@ -23,20 +23,20 @@
             <div class="left_wrap">
                 <!-- 헤더 -->
                 <div class="calendar_header">
-                    <span>{{ this.selectedYear }}.{{ this.selectedMonth }}</span>
-                    <i style="float: right; cursor: pointer; margin-top: 0.25em" class="fas fa-ellipsis-h"></i>
-                    
+                    <i @click="moveDate('prev', '')" class="fas fa-angle-left" style="margin-right: 10px;"></i>
+                    <span>{{ this.showYear }}.{{ this.showMonth }}</span>
+                    <i @click="moveDate('next', '')" class="fas fa-angle-right" style="margin-left: 10px;"></i>
+                    <i style="float: right; margin-top: 0.25em" class="fas fa-cogs"></i>
                 </div>
 
-                <table calss="calendar_wrapper">
+                <table>
                     <!-- 요일 -->
-                    <tr>
+                    <tr style="height: 30px;">
                         <td v-for="rows in weekList" class="calendar_cell">{{ rows }}</td>
                     </tr>
 
                     <!-- 일자 -->
-                    <tr v-for="rows in calendarGrid"
-                        :class="{ calendar_week6: weekCount6, calendar_week5: !weekCount6 }">
+                    <tr v-for="rows in calendarGrid">
                         <td v-for="(item, index) in rows" class="calendar_cell" v-if="item != null"
                             @click="selectDay(item.year, item.month, item.day)" style="cursor: pointer; height: 100%;">
                             <div :class="{ calendar_opaque: item.type!='now'}">
@@ -58,17 +58,17 @@
                     <span>Day {{ this.selectedDay }}</span>
                 </div>
                 <div>
-                    <p style="font-size: 1.1em; font-weight: bold; margin-bottom: 10px;"># 월간일정</p>
+                    <p style="font-size: 1.1em; font-weight: bold; margin-bottom: 10px;"># 월간일정<i class="fas fa-plus" style="margin-left: 10px;"></i></p>
                     <br><br><br>
 
-                    <p style="font-size: 1.1em; font-weight: bold; margin-bottom: 10px;"># 오늘일정</p>
+                    <p style="font-size: 1.1em; font-weight: bold; margin-bottom: 10px;"># 오늘일정<i class="fas fa-plus" style="margin-left: 10px;"></i></p>
                     <span v-for="(s, index) in selectedItem.schedule"
                         :class="{ schedule_label_full: s.labelType=='full' }" v-bind:style="{ color: s.labelColor }">
                         {{ s.labelText }}
                     </span><br>
                     <br><br><br>
 
-                    <p style="font-size: 1.1em; font-weight: bold; margin-bottom: 10px;"># 체크리스트</p>
+                    <p style="font-size: 1.1em; font-weight: bold; margin-bottom: 10px;"># 체크리스트<i class="fas fa-plus" style="margin-left: 10px;"></i></p>
 
                 </div>
             </div>
@@ -82,18 +82,20 @@
         el: '#app',
         data: {
             gridMaxCount: 7,
-            weekCount6: false, // 달력에 몇주차까지 표기할건지 저장하는 변수
             dateList: [], // 이번달에 그릴 날짜 리스트
             calendarGrid: [], // dateList를 그리드 형식으로 그리기 위해 사용되는 리스트
             weekList: ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"],
-            selectedYear: 2020,
-            selectedMonth: "09",
-            selectedDay: 30,
+            selectedYear: 0,
+            selectedMonth: "",
+            selectedDay: 0,
+            showYear: 0,
+            showMonth: "",
             selectedItem: {},
             allScheduleList: [], // 전체 일정 목록
         },
         methods: {
             getCalendar: function (yyyy, m) {
+                console.log("getCalendar : " + yyyy + "-" + m);
                 this.dateList = [];
                 this.calendarGrid = [];
                 this.allScheduleList = [];
@@ -154,13 +156,6 @@
                     }
                 }
 
-                // 달력에 몇주까지 표기할건지 계산
-                if (this.dateList.length > 35) {
-                    this.weekCount6 = true;
-                } else {
-                    this.weekCount6 = false;
-                }
-
                 this.getAllSchedules();
             },
             getAllSchedules: function () {
@@ -190,7 +185,6 @@
                                 var schedule = self.allScheduleList[i];
                                 let date = String(self.dateList[j].month) + String(self.dateList[j].day);
                                 if (schedule.startDate.indexOf('0000') >= 0) {
-                                    console.log((String(schedule.startDate.split("-")[1]) + String(schedule.startDate.split("-")[2])));
                                     if (date >= (String(schedule.startDate.split("-")[1]) + String(schedule.startDate.split("-")[2]))
                                         && date <= (String(schedule.endDate.split("-")[1]) + String(schedule.endDate.split("-")[2]))) {
                                         self.dateList[j].isHoliday = schedule.isHoliday;
@@ -239,8 +233,8 @@
                 return temp;
             },
             selectDay: function (year, month, day) {
-                this.selectedYear = year;
-                this.selectedMonth = month;
+                this.showYear = year;
+                this.showMonth = month;
                 this.selectedDay = day;
 
                 for (var i = 0; i < this.dateList.length; i++) {
@@ -249,21 +243,57 @@
                     }
                 }
                 if (this.selectedItem.type != "now") {
-                    this.getCalendar(this.selectedYear, parseInt(this.selectedMonth));
+                    this.getCalendar(this.showYear, parseInt(this.showMonth));
+                }
+            },
+            moveDate: function (year, month) {
+
+                if (year == 'prev') {
+                    var prevDate = new Date(this.showYear, this.showMonth - 1, this.selectedDay);
+                    var monthOfYear = prevDate.getMonth();
+                    prevDate.setMonth(monthOfYear - 1);
+                    this.showYear = prevDate.getFullYear();
+                    this.showMonth = this.makeTwoString(Number(prevDate.getMonth() + 1));
+                    this.getCalendar(prevDate.getFullYear(), Number(prevDate.getMonth() + 1));
+                } else if (year == 'next') {
+                    var nextDate = new Date(this.showYear, this.showMonth - 1, this.selectedDay);
+                    var monthOfYear = nextDate.getMonth();
+                    nextDate.setMonth(monthOfYear + 1);
+                    this.showYear = nextDate.getFullYear();
+                    this.showMonth = this.makeTwoString(Number(nextDate.getMonth() + 1));
+                    this.getCalendar(nextDate.getFullYear(), Number(nextDate.getMonth() + 1))
+                } else {
+                    this.getCalendar(year, month);
                 }
             }
         },
         created: function () {
-            this.getCalendar(this.selectedYear, parseInt(this.selectedMonth));
+
+            let now = new Date();
+            console.log(now);
+            this.selectedYear = now.getFullYear();
+            this.selectedMonth = this.makeTwoString(now.getMonth()+1);
+            this.selectedDay = now.getDate();
+            this.showYear = now.getFullYear();
+            this.showMonth = this.makeTwoString(now.getMonth()+1);
+
+
+            this.getCalendar(this.showYear, parseInt(this.showMonth));
             var self = this;
 
             setTimeout(function () {
-                self.selectDay(self.selectedYear, self.selectedMonth, self.selectedDay);
+                self.selectDay(self.showYear, self.showMonth, self.selectedDay);
             }, 500);
         }
     });
 
 
+
+    // Pinch Zoom 끄기
+    document.documentElement.addEventListener('touchstart', function (event) { if (event.touches.length > 1) { event.preventDefault(); } }, false);
+
+    // Double tab Zoom 끄기
+    var lastTouchEnd = 0; document.documentElement.addEventListener('touchend', function (event) { var now = (new Date()).getTime(); if (now - lastTouchEnd <= 300) { event.preventDefault(); } lastTouchEnd = now; }, false);
 </script>
 
 </html>
