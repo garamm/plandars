@@ -168,8 +168,8 @@
                         for (var i = 1; i < list.length; i++) {
                             var listData = list[i].split(',');
                             self.allScheduleList.push({
-                                startDate: "0000-" + listData[1],
-                                endDate: "0000-" + listData[2],
+                                startDate: listData[1],
+                                endDate: listData[2],
                                 isHoliday: true,
                                 labelText: listData[4],
                                 labelColor: "red",
