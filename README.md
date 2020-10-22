@@ -86,3 +86,5 @@ create table tb_schedule (
 	primary key(s_id)
 );
 ```
+start react : npm start<br>
+start node : node app.js

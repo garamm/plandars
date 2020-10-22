@@ -11,3 +11,16 @@ body {
 .line {
   background: #EEEEEE;
 }
+
+.view_option {
+  display: block;
+}
+
+/* PC */
+@media screen and (min-width: 1024) { .view_option { display: none; } }
+
+/* Tablet */
+@media screen and (min-width: 768) and (max-width: 1023) { .view_option { display: none; } }
+
+/* Mobile */
+@media screen and (min-width: 1024) { .view_option { display: block; } }
