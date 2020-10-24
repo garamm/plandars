@@ -1,11 +1,14 @@
 .background {
     color: white;
     background: #9D7446;
-    font-size: 1.5em;
-    padding: 0.5em;
+    font-size: 1.3rem;
+    padding: 0.8rem;
 }
 
-.float_right {
-    float: right;
-    margin-left: 0.8em;
+.header_margin {
+    margin-left: 1rem;
+}
+
+.pointer {
+    cursor: pointer;
 }
