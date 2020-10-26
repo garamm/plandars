@@ -45,7 +45,10 @@ export default class Header extends Component {
                                 
                 <span className="header_margin pointer"><i className="fas fa-cog"></i></span>
                 <span className="header_margin pointer"><i className="fas fa-sign-out-alt"></i></span>
+				
             </div>
+			
+			
         );
     };
 
