@@ -1,7 +1,7 @@
 ## Plandars
 
 <br>
-NodeJS / React / MySQL
+NodeJS / Vue / MySQL
 <br>
 DB : plandars
 
@@ -86,5 +86,3 @@ create table tb_schedule (
 	primary key(s_id)
 );
 ```
-start react : npm start<br>
-start node : node app.js
