@@ -5,11 +5,13 @@ import Main from '@/pages/Main'
 Vue.use(Router)
 
 export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'Main',
-      component: Main
-    }
-  ]
+	mode: 'history',
+	routes: [
+		{
+			path: '/',
+			name: 'Main',
+			component: Main
+			
+		}
+	]
 })

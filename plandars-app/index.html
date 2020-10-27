@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
     <title>plandars</title>
   </head>
   <body>
@@ -10,3 +11,73 @@
     <!-- built files will be auto injected -->
   </body>
 </html>
+
+<style>
+/* PC */
+@media screen and (min-width: 1024px) {
+    body {
+        font-size: 16px;
+    }
+    
+    .view_pc {
+        display: block;
+    }
+
+    .view_pc_tab {
+        display: block;
+    }
+
+    .view_m {
+        display: none;
+    }
+}
+
+/* Tablet */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    body {
+        font-size: 16px;
+    }
+
+    .view_pc {
+        display: none;
+    }
+
+    .view_pc_tab {
+        display: block;
+    }
+
+    .view_m {
+        display: none;
+    }
+}
+
+/* Mobile */
+@media screen and (max-width: 767px) {
+    body {
+        font-size: 13px;
+    }
+
+    .view_pc {
+        display: none;
+    }
+
+    .view_pc_tab {
+        display: none;
+    }
+
+    .view_m {
+        display: block;
+    }
+}
+	
+.flex_row {
+	display: flex;
+	flex-direction: row;
+}
+
+.flex_1 {
+  flex: 1;
+}
+
+	
+</style>
