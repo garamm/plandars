@@ -11,7 +11,7 @@
 /coverage
 
 # production
-/plandars-app/build
+/build
 
 # misc
 .DS_Store
