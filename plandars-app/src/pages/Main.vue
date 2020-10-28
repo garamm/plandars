@@ -16,6 +16,8 @@
 import Header from '../components/Header';
 import Calendar from '../components/Calendar';
 import Side from '../components/Side';
+import EventBus from '../utils/EventBus';
+	
 export default {
 	components: {
 		Header, Calendar, Side
@@ -24,6 +26,23 @@ export default {
 		return {
 
 		}
+	},
+	created() {
+		this.setToday();
+	},
+	methods: {		
+		setToday: function() {
+			var now = new Date();
+			let year = now.getFullYear();
+			let month = (now.getMonth() + 1);
+			let date = now.getDate();
+			var selectedDate = new Object();
+			selectedDate.year = year;
+			selectedDate.month = month;
+			selectedDate.date = date;
+			
+			EventBus.$emit('selectedDate', selectedDate);
+		},
 	}
 }
 </script>
@@ -33,13 +52,13 @@ export default {
 .wrap_side {
   width: 20rem;
   height: calc(100vh - 50px);
-  padding: 1rem;
-  background: #D499B9;
+  padding: 10px;
+  border-left: 1px solid #ECECEC;
 }
 
 .wrap_calendar {
   height: calc(100vh - 50px);
-  padding: 1rem;
+  padding: 10px;
 }
 
 </style>

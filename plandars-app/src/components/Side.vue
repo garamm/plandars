@@ -20,7 +20,6 @@ export default {
 
 <style scoped>
 	.wrap {
-		color: white;
 		height: 100%;
 		width: 100%;
 	}

@@ -51,15 +51,15 @@ export default {
 .background {
     color: white;
     background: #9055A2;
-	height: 50px;
-    font-size: 1.3rem;
-	padding-top: 0.8rem;
-	padding-left: 0.8rem;
-	padding-right: 0.8rem;
+	height: 60px;
+    font-size: 20px;
+	padding-top: 16px;
+	padding-left: 16px;
+	padding-right: 16px;
 }
 
 .header_margin {
-    margin-left: 1rem;
+    margin-left: 16px;
 }
 
 .pointer {
