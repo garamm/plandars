@@ -1,8 +1,11 @@
 <template>
-	<div>
+	<div class="wrap_main flex_col">
 		<Header></Header>
-		<div class="flex_row">
-			<div class="flex_1 wrap_calendar">
+		<div class="flex_row flex_1">
+			<div class="flex_1 view_pc_tab" style="margin: 16px !important;">
+				<Calendar />
+			</div>
+			<div class="flex_1 view_m" style="margin: 0px !important;">
 				<Calendar />
 			</div>
 			<div class="wrap_side view_pc">
@@ -16,7 +19,6 @@
 import Header from '../components/Header';
 import Calendar from '../components/Calendar';
 import Side from '../components/Side';
-import EventBus from '../utils/EventBus';
 	
 export default {
 	components: {
@@ -26,39 +28,40 @@ export default {
 		return {
 
 		}
+	},	
+	methods: {		
+		setToday: function() {
+			var now = new Date();
+			this.$store.state.year = now.getFullYear();
+			this.$store.state.month = this.makeDigitStr(now.getMonth() + 1);
+			this.$store.state.date = this.makeDigitStr(now.getDate());
+		},
+		makeDigitStr: function(num) {
+			if(num < 10) {
+				return "0"+num;
+			} else {
+				return num;
+			}
+		}
 	},
 	created() {
 		this.setToday();
 	},
-	methods: {		
-		setToday: function() {
-			var now = new Date();
-			let year = now.getFullYear();
-			let month = (now.getMonth() + 1);
-			let date = now.getDate();
-			var selectedDate = new Object();
-			selectedDate.year = year;
-			selectedDate.month = month;
-			selectedDate.date = date;
-			
-			EventBus.$emit('selectedDate', selectedDate);
-		},
-	}
 }
 </script>
 
 <style scoped>
 
-.wrap_side {
-  width: 20rem;
-  height: calc(100vh - 50px);
-  padding: 10px;
-  border-left: 1px solid #ECECEC;
-}
-
-.wrap_calendar {
-  height: calc(100vh - 50px);
-  padding: 10px;
-}
+	.wrap_main {
+		width: 100%;
+		height: 100%;
+	}
+	
+	.wrap_side {
+		width: 20rem;
+		height: 100%;
+		padding: 10px;
+		border-left: 1px solid #ECECEC;
+	}
 
 </style>

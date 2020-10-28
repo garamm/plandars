@@ -1,5 +1,5 @@
 <template>
-	<div class="wrap">
+	<div>
 		Side
 	</div>
 </template>
@@ -19,8 +19,4 @@ export default {
 </script>
 
 <style scoped>
-	.wrap {
-		height: 100%;
-		width: 100%;
-	}
 </style>
