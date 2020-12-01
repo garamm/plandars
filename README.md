@@ -1,7 +1,7 @@
 ## Plandars
 
 <br>
-NodeJS / Vue / MySQL
+NodeJS / React / MySQL
 <br>
 DB : plandars
 
@@ -19,7 +19,7 @@ create table tb_user (
 	u_id varchar(50) not null,
 	u_pwd varchar(50) not null,
 	primary key (u_id)
-);
+) charset = utf8;
 ```
 
 <br><br>
@@ -37,12 +37,12 @@ tb_category
 ```
 create table tb_category (
 	c_id int not null auto_increment,
-    u_id varchar(50) not null,
+    u_id varchar(50),
 	c_name varchar(30) not null,
 	c_color varchar(30) not null,
 	c_alpha double not null,
 	primary key(c_id)
-);
+) charset = utf8;
 ```
 
 <br><br>
@@ -84,5 +84,36 @@ create table tb_schedule (
 	s_lat varchar(30),
 	s_lon varchar(30),
 	primary key(s_id)
-);
+) charset = utf8;
 ```
+
+<br><br>
+
+tb_holiday
+
+||Field|Type|Comment|
+|---|---|---|---|
+|PK|h_id|int NOT NULL auto_increment|일정 코드|
+||h_title|varchar(30) NOT NULL|휴일명|
+||c_id|int NOT NULL|카테고리 코드|
+||h_gid|char(10) NOT NULL|일정그룹 코드|
+||h_start|char(10) NOT NULL|일정 시작일|
+||h_end|char(10) NOT NULL|일정 종료일|
+||h_moon|int NOT NULL|음력여부|
+||h_rest|int NOT NULL|휴일여부|
+
+```
+create table tb_holiday (
+	h_id int not null auto_increment,
+    u_id varchar(50) not null,
+	h_title varchar(30) not null,
+	c_id int not null,
+	h_gid char(10) not null,
+	h_start char(10) not null,
+	h_end char(10) not null,
+	h_moon int not null,
+	h_rest int not null,
+	primary key(h_id)
+) charset = utf8;
+```
+

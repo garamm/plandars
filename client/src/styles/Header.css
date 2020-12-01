@@ -1,0 +1,21 @@
+.Header {
+	padding: 8px;
+	border-bottom: 1px solid #e5e5e5;
+	align-items: center;
+}
+
+img {
+	display: block;
+	width: 30px;
+	height: 30px;
+}
+
+.right_content {
+	display: inline-block;
+	flex: 1;
+	text-align: right;
+}
+
+.header_label {
+	margin-top: 3px;
+}

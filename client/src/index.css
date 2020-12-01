@@ -1,0 +1,153 @@
+body {
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+		'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	color: #333333;
+	cursor: default;
+}
+
+code {
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+a:link {
+	color: #333333;
+	text-decoration: none;
+}
+a:visited {
+	color: #333333;
+	text-decoration: none;
+}
+a:hover {
+	color: #333333;
+	text-decoration: none;
+}
+
+.ic_show {
+	width: 50px;
+	display: inline-block;
+}
+
+.ic_hide {
+	width: 50px;
+	display: none;
+}
+
+.v_show {
+	display: block;
+}
+
+.v_hide {
+	display: none;
+}
+
+.rm_btn {
+	border: none;
+	background: none;
+	outline:none;
+}
+
+.ic_width {
+	height: 30px;
+	width: 48px;
+}
+/* Extra small devices (phones, 600px and down) */
+@media screen and (max-width: 600px) {
+	.phone {
+		display: block !important;
+	}
+	.pc_tablet {
+		display: none !important;
+	}
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media screen and (min-width: 600px) {
+	.phone {
+		display: block !important;
+	}
+	.pc_tablet {
+		display: none !important;
+	}
+}
+/* Medium devices (landscape tablets, 768px and up) */
+@media screen and (min-width: 768px) {
+	.phone {
+		display: none !important;
+	}
+	.pc_tablet {
+		display: block !important;
+	}
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media screen and (min-width: 992px) {
+	.phone {
+		display: none !important;
+	}
+	.pc_tablet {
+		display: block !important;
+	}
+}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media screen and (min-width: 1200px) {
+	.phone {
+		display: none !important;
+	}
+	.pc_tablet {
+		display: block !important;
+	}
+}
+
+.ml_10 {
+	margin-left: 10px;
+}
+.mr_10 {
+	margin-right: 10px;
+}
+.mr_16 {
+	margin-right: 16px;
+}
+
+/* 텍스트 크기 관련 시작 */
+.t_title {
+	font-size: 20px;
+}
+
+.t_subtitle {
+	font-size: 18px;
+}
+
+.t_small {
+	font-size: 13px;
+}
+/* 텍스트 크기 관련 끝 */
+
+/* flex 관련 시작 */
+.flex_row {
+	display: flex;
+	flex-direction: row;
+}
+.flex_column {
+	display: flex;
+	flex-direction: column;
+}
+.flex_1 {
+	flex: 1;
+}
+.d_ib {
+	display: inline-block;
+}
+/* flex 관련 끝 */
+
+/* 색상 관련 시작 */
+.c_black {
+	color: #333333;
+}
+/* 색상 관련 끝 */
+
+/* float 관련 시작 */
+.float_r {
+	float: right;
+}
+/* float 관련 끝 */
