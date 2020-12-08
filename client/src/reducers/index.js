@@ -4,6 +4,8 @@ import { combineReducers } from 'redux';
 const counterInitialState = {
 	baseURL: "https://plandars-api.run.goorm.io",
 	pList: [], // 일정 리스트
+	wList: [], // 주
+	mList: [], // 월
     value: 0,
     diff: 1,
 	contentType: 'month',
@@ -24,12 +26,6 @@ function make2digit(value) {
 function setToSunday(dates) {
 	var days = dates.getDay();
 	dates.setDate(dates.getDate() - days);
-	
-	let year = dates.getFullYear();
-	let month = make2digit(dates.getMonth() + 1);
-	let dateStr = make2digit(dates.getDate());
-	console.log(year+"-"+month+"-"+dateStr);
-	
 	return dates;
 }
 
@@ -39,7 +35,8 @@ function changeDate(state, action) {
 	return Object.assign({}, state, {
 		date: action.date,
 		week: Math.ceil(weekObj.getDate() / 7),
-		day: weeks[dateObj.getDay()]
+		day: weeks[dateObj.getDay()],
+		wList: getWeekList(dateObj)
 	});
 }
 
@@ -71,44 +68,75 @@ function moveDate(state, action) {
 	return Object.assign({}, state, {
 		date: year+"-"+month+"-"+date,
 		week: Math.ceil(weekObj2.getDate() / 7),
-		day: weeks[dateObj.getDay()]
+		day: weeks[dateObj.getDay()],
+		wList: getWeekList(dateObj)
 	});
+}
+
+function changeMode(state, action) {
+	var dateObj = new Date();
+	
+	let year = dateObj.getFullYear();
+	let month = make2digit(dateObj.getMonth() + 1);
+	let dateStr = make2digit(dateObj.getDate());
+	
+	var weekObj = setToSunday(new Date());
+	
+	return Object.assign({}, state, {
+		date: year+"-"+month+"-"+dateStr,
+		week: Math.ceil(weekObj.getDate() / 7),
+		day: weeks[dateObj.getDay()],
+		contentType: action.contentType,
+		wList: getWeekList(dateObj)
+	});
+}
+
+function getWeekList(date) {
+	var currentDay = new Date(date);  
+	var theYear = currentDay.getFullYear();
+	var theMonth = currentDay.getMonth();
+	var theDate  = currentDay.getDate();
+	var theDayOfWeek = currentDay.getDay();
+
+	var thisWeek = [];
+
+	for(var i=0; i<7; i++) {
+		var resultDay = new Date(theYear, theMonth, theDate + (i - theDayOfWeek));
+		var yyyy = resultDay.getFullYear();
+		var mm = Number(resultDay.getMonth()) + 1;
+		var dd = resultDay.getDate();
+
+		mm = String(mm).length === 1 ? '0' + mm : mm;
+		dd = String(dd).length === 1 ? '0' + dd : dd;
+
+		thisWeek.push({
+			weekDate: yyyy + '-' + mm + '-' + dd
+		})
+		
+			// key={i} idx={i} sid={item.sid} title={item.title}
+						// 	cid={item.cid} gid={item.gid}  start={item.start} end={item.end}
+						// 	lunar={item.lunar} type={item.type} chk={item.chk} memo={item.memo}
+						// 	addr={item.addr} lat={item.lat} lon={item.lon} rest={item.rest}
+	}
+	
+	console.log(thisWeek);
+
+	return thisWeek;
 }
 
 
 const counter = (state = counterInitialState, action) => {	
     switch(action.type) {
-		case CHANGE_CONTENT:
-			if(action.contentType === "week") {
-				var newDate = setToSunday(new Date(state.date));
-				let year = newDate.getFullYear();
-				let month = make2digit(newDate.getMonth() + 1);
-				let date = make2digit(newDate.getDate());
-				return Object.assign({}, state, {
-					date: year+"-"+month+"-"+date,
-					week: Math.ceil(newDate.getDate() / 7),
-					day: weeks[newDate.getDay()],
-					contentType: action.contentType
-				});
-			} else {
-				var nowDate = new Date();
-				let year = nowDate.getFullYear();
-				let month = make2digit(nowDate.getMonth() + 1);
-				let date = make2digit(nowDate.getDate());
-				return Object.assign({}, state, {
-					date: year+"-"+month+"-"+date,
-					week: Math.ceil(nowDate.getDate() / 7),
-					day: weeks[nowDate.getDay()],
-					contentType: action.contentType
-				});
-			}
+		case CHANGE_CONTENT: // 오늘 날짜로 초기화 후 모드 변경
+			return changeMode(state, action);
 		case CHANGE_DATE:	
 			return changeDate(state, action);
 		case MOVE_DATE:
 			return moveDate(state, action);
 		case UPDATE_PLIST:
 			return Object.assign({}, state, {
-				pList: action.data
+				pList: action.data,
+				wList: getWeekList(new Date(action.data))
 			});
         default:
             return state;

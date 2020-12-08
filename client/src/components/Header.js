@@ -10,7 +10,7 @@ class Header extends React.Component {
 			<div className="Header flex_row">
 				<span className="t_title pc_tablet mr_16">Plandars</span>
 				<span className="t_title flex_row">
-					<button className="t_subtitle rm_btn ic_width" onClick={() => this.props.moveDate('prev') }>
+					<button className="v_hide t_subtitle rm_btn ic_width" onClick={() => this.props.moveDate('prev') }>
 						<img className="t_subtitle c_black d_ib" src="/imgs/ic_prev.svg" alt="ic_prev"></img>
 					</button>
 					<span className={this.props.contentType === 'month' ? 'v_show' : 'v_hide'} >
@@ -19,7 +19,7 @@ class Header extends React.Component {
 					<span className={this.props.contentType === 'week' ? 'v_show' : 'v_hide'} >
 						{ this.props.date.split('-')[0] }년 { Number(this.props.date.split('-')[1]) }월 { this.props.week }째주
 					</span>
-					<button className="t_subtitle rm_btn ic_width" onClick={() => this.props.moveDate('next') }>
+					<button className="v_hide t_subtitle rm_btn ic_width" onClick={() => this.props.moveDate('next') }>
 						<img className="t_subtitle c_black d_ib" src="/imgs/ic_next.svg" alt="ic_next"></img>
 					</button>
 				</span>

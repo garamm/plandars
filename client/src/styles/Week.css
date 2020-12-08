@@ -1,4 +1,80 @@
 .Week {
-	width: 100%;
-	list-style: none;
+	display: flex;
+	width: calc(100vw - 20px);
+	height: calc(100vh - 70px);
+}
+
+.Week > div {
+	flex: 1;
+	padding: 5px;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media screen and (max-width: 600px) {
+	.Week {
+		flex-direction: column;
+	}
+	
+	.Week > div {
+		border-bottom: 1px solid #E5E5E5;
+	}
+	
+	.Week > div:nth-last-child(1) {
+		border-bottom: 0px;
+	}
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media screen and (min-width: 600px) {
+	.Week {
+		flex-direction: column;
+	}
+	
+	.Week > div {
+		border-bottom: 1px solid #E5E5E5;
+	}
+	
+	.Week > div:nth-last-child(1) {
+		border-bottom: 0px;
+	}
+}
+/* Medium devices (landscape tablets, 768px and up) */
+@media screen and (min-width: 768px) {
+	.Week {
+		flex-direction: row;
+	}
+	
+	.Week > div {
+		border-right: 1px solid #E5E5E5;
+		border-bottom: 0px;
+	}
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media screen and (min-width: 992px) {
+	.Week {
+		flex-direction: row;
+	}
+	
+	.Week > div {
+		border-right: 1px solid #E5E5E5;
+		border-bottom: 0px;
+	}
+	
+	.Week > div:nth-last-child(1) {
+		border-right: 0px;
+	}
+}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media screen and (min-width: 1200px) {
+	.Week {
+		flex-direction: row;
+	}
+	
+	.Week > div {
+		border-right: 1px solid #E5E5E5;
+		border-bottom: 0px;
+	}
+	
+	.Week > div:nth-last-child(1) {
+		border-right: 0px;
+	}
 }
