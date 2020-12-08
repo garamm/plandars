@@ -18,15 +18,18 @@ class Week extends React.Component {
 	
 	render() {
 		return (
-			<div className="Week">
-				<ul>
-                    {this.state.contactData.map((contact, i) => {
-                        return (<WeekItem name={contact.name}
-                                            phone={contact.phone}
-                                              key={i}/>);
-                    })}
-                </ul>
-			</div>
+			<ul className="Week">
+				{this.props.pList.map((item, i) => {
+					return (
+						<WeekItem
+							idx={i} sid={item.sid} title={item.title}
+							cid={item.cid} gid={item.gid}  start={item.start} end={item.end}
+							lunar={item.lunar} type={item.type} chk={item.chk} memo={item.memo}
+							addr={item.addr} lat={item.lat} lon={item.lon} rest={item.rest}
+						/>
+					);
+				})}
+			</ul>
 		);
 	}
 }
@@ -36,6 +39,7 @@ let mapStateToProps = (state) => {
 		date: state.counter.date,
 		week: state.counter.week,
 		day: state.counter.day,
+		pList: state.counter.pList,
 	}
 }
 

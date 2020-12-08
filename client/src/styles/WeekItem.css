@@ -1,0 +1,5 @@
+.WeekItem {
+	float: left;
+	width: calc(100% / 7);
+	border: 1px solid pink;
+}

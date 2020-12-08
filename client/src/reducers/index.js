@@ -1,7 +1,9 @@
-import { CHANGE_CONTENT, CHANGE_DATE, MOVE_DATE } from '../actions';
+import { CHANGE_CONTENT, CHANGE_DATE, MOVE_DATE, UPDATE_PLIST } from '../actions';
 import { combineReducers } from 'redux';
 
 const counterInitialState = {
+	baseURL: "https://plandars-api.run.goorm.io",
+	pList: [], // 일정 리스트
     value: 0,
     diff: 1,
 	contentType: 'month',
@@ -104,6 +106,10 @@ const counter = (state = counterInitialState, action) => {
 			return changeDate(state, action);
 		case MOVE_DATE:
 			return moveDate(state, action);
+		case UPDATE_PLIST:
+			return Object.assign({}, state, {
+				pList: action.data
+			});
         default:
             return state;
     }

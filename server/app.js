@@ -1,6 +1,7 @@
 var express = require('express');
 var http = require('http');
 var app = express();
+var cors = require('cors');
 
 var server = http.createServer(app);
 var indexRouter = require('./routes/index.js');
@@ -8,6 +9,9 @@ var loginRouter = require('./routes/login.js');
 var calendarRouter = require('./routes/calendar.js');
 var categoryRouter = require('./routes/category.js');
 var holidayRouter = require('./routes/holiday.js');
+
+// CORS 설정
+app.use(cors());
 
 app.use('/', indexRouter);
 app.use('/login', loginRouter);

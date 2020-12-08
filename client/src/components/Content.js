@@ -16,8 +16,6 @@ class Content extends React.Component {
 					<div className={this.props.contentType === 'week' ? 'v_show' : 'v_hide'}>
 						<Week></Week>
 					</div>
-					
-					
 				</div>
 			</div>
         );

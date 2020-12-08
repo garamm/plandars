@@ -67,7 +67,7 @@ tb_schedule
 ||s_gid|char(10) NOT NULL|일정그룹 코드|
 ||s_start|char(10) NOT NULL|일정 시작일|
 ||s_end|char(10) NOT NULL|일정 종료일|
-||s_moon|char(1) NOT NULL|음력여부 Y/N|
+||s_lunar|char(4) NOT NULL|음력인 경우 일자 기입|
 ||s_type|varchar(30) NOT NULL|일정/체크리스트|
 ||s_chk|char(1) NOT NULL|(체크리스트인 경우) 체크유무 Y/N|
 ||s_memo|varchar(200)|일정 메모|
@@ -85,7 +85,7 @@ create table tb_schedule (
 	s_gid char(10) not null comment '일정그룹 코드',
 	s_start char(10) not null comment '일정 시작일',
 	s_end char(10) not null comment '일정 종료일',
-	s_moon char(1) not null comment '음력여부 Y/N',
+	s_lunar char(4) not null comment '음력인 경우 일자 기입',
 	s_type varchar(30) not null comment '일정/체크리스트',
 	s_chk char(1) not null comment '체크유무 Y/N',
 	s_memo varchar(200) comment '일정 메모',
@@ -106,7 +106,7 @@ tb_holiday
 ||c_id|char(8) NOT NULL|카테고리 코드|
 |PK|h_start|char(10) NOT NULL|일정 시작일|
 |PK|h_end|char(10) NOT NULL|일정 종료일|
-||h_moon|char(1) NOT NULL|음력여부 Y/N|
+||h_lunar|char(4) NOT NULL|음력인 경우 일자 기입|
 ||h_rest|char(1) NOT NULL|휴일여부 Y/N|
 
 ```
@@ -115,7 +115,7 @@ create table tb_holiday (
 	c_id char(8) not null comment '카테고리 코드',
 	h_start char(10) not null comment '일정 시작일',
 	h_end char(10) not null comment '일정 종료일',
-	h_moon char(1) not null comment '음력여부 Y/N',
+	h_lunar char(4) not null comment '음력인 경우 일자 기입',
 	h_rest char(1) not null comment '휴일여부 Y/N',
 	primary key(h_title, h_start, h_end)
 );
