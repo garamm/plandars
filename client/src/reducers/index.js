@@ -2,7 +2,7 @@ import { CHANGE_CONTENT, CHANGE_DATE, MOVE_DATE, UPDATE_PLIST } from '../actions
 import { combineReducers } from 'redux';
 
 const counterInitialState = {
-	baseURL: "https://plandars-api.run.goorm.io",
+	baseURL: "http://localhost:4000",
 	pList: [], // 일정 리스트
 	wList: [], // 주
 	mList: [], // 월
@@ -99,7 +99,6 @@ function getWeekList(date) {
 	var theDayOfWeek = currentDay.getDay();
 
 	var thisWeek = [];
-
 	for(var i=0; i<7; i++) {
 		var resultDay = new Date(theYear, theMonth, theDate + (i - theDayOfWeek));
 		var yyyy = resultDay.getFullYear();
@@ -108,15 +107,20 @@ function getWeekList(date) {
 
 		mm = String(mm).length === 1 ? '0' + mm : mm;
 		dd = String(dd).length === 1 ? '0' + dd : dd;
+		var weekDate = yyyy + '-' + mm + '-' + dd;
 
+		// 일정추가
+		var list = [];
+		for(var j=0; j<pList.length; j++) {
+			var item = pList[j];
+			if(item.start == weekDate) {
+				list.push(item);
+			}
+		}
 		thisWeek.push({
-			weekDate: yyyy + '-' + mm + '-' + dd
+			weekDate: weekDate,
+			list: list
 		})
-		
-			// key={i} idx={i} sid={item.sid} title={item.title}
-						// 	cid={item.cid} gid={item.gid}  start={item.start} end={item.end}
-						// 	lunar={item.lunar} type={item.type} chk={item.chk} memo={item.memo}
-						// 	addr={item.addr} lat={item.lat} lon={item.lon} rest={item.rest}
 	}
 	
 	console.log(thisWeek);
