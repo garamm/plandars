@@ -36,7 +36,7 @@ function changeDate(state, action) {
 		date: action.date,
 		week: Math.ceil(weekObj.getDate() / 7),
 		day: weeks[dateObj.getDay()],
-		wList: getWeekList(dateObj)
+		wList: getWeekList(state, dateObj)
 	});
 }
 
@@ -69,7 +69,7 @@ function moveDate(state, action) {
 		date: year+"-"+month+"-"+date,
 		week: Math.ceil(weekObj2.getDate() / 7),
 		day: weeks[dateObj.getDay()],
-		wList: getWeekList(dateObj)
+		wList: getWeekList(state, dateObj)
 	});
 }
 
@@ -87,11 +87,11 @@ function changeMode(state, action) {
 		week: Math.ceil(weekObj.getDate() / 7),
 		day: weeks[dateObj.getDay()],
 		contentType: action.contentType,
-		wList: getWeekList(dateObj)
+		wList: getWeekList(state, dateObj)
 	});
 }
 
-function getWeekList(date) {
+function getWeekList(state, date) {
 	var currentDay = new Date(date);  
 	var theYear = currentDay.getFullYear();
 	var theMonth = currentDay.getMonth();
@@ -111,9 +111,9 @@ function getWeekList(date) {
 
 		// 일정추가
 		var list = [];
-		for(var j=0; j<pList.length; j++) {
-			var item = pList[j];
-			if(item.start == weekDate) {
+		for(var j=0; j<state.pList.length; j++) {
+			var item = state.pList[j];
+			if(item.start === weekDate) {
 				list.push(item);
 			}
 		}
@@ -122,9 +122,8 @@ function getWeekList(date) {
 			list: list
 		})
 	}
+	console.log(thisWeek[0].list);
 	
-	console.log(thisWeek);
-
 	return thisWeek;
 }
 
@@ -140,7 +139,7 @@ const counter = (state = counterInitialState, action) => {
 		case UPDATE_PLIST:
 			return Object.assign({}, state, {
 				pList: action.data,
-				wList: getWeekList(new Date(action.data))
+				wList: getWeekList(state, new Date(action.data))
 			});
         default:
             return state;
