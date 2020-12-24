@@ -4,7 +4,7 @@ module.exports = {
     host: '13.124.220.147',
     port: 3306,
     user: 'root',
-    password: 'wlscjfdjs1!@#',
+    password: '',
     database: 'plandars',
     multipleStatements: true
 };
