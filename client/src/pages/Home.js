@@ -27,8 +27,10 @@ class Home extends React.Component {
 			if(response.status !== 200) {
 				alert("휴일 데이터를 가져올 수 없습니다(1)");
 			} else {
+				console.log("휴일 데이터 조회 완료");
 				var json = response.data;
 				var list = [];
+				console.log(json);
 				if(json.resultCode === 200) {
 					for(var i=0; i<json.resultData.length; i++) {
 						var item = json.resultData[i];
@@ -36,6 +38,10 @@ class Home extends React.Component {
 							sid: "", // 휴일은 스케쥴코드 공백
 							title: item.h_title,
 							cid: item.c_id,
+							cname: item.c_name, // 카테고리명
+							ccolor: item.c_color, // 카테고리 색상
+							ctcolor: item.c_tcolor, // 카테고리 텍스트 색상
+							calpha: item.c_alpha, // 카테고리 투명도
 							gid: "", // 휴일은 그룹아이디 공백
 							start: item.h_start,
 							end: item.h_end,
@@ -92,8 +98,6 @@ let mapStateToProps = (state) => {
     return {
 		contentType: state.counter.contentType,
         date: state.counter.date,
-		week: state.counter.week,
-		day: state.counter.day,
 		baseURL: state.counter.baseURL,
 		pList: state.counter.pList,
     };

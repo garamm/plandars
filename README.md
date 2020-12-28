@@ -41,6 +41,7 @@ tb_category
 ||u_id|varchar(50) NOT NULL|유저 아이디|
 ||c_name|varchar(30) NOT NULL|카테고리명|
 ||c_color|varchar(30) NOT NULL|카테고리 색상|
+||c_tcolor|varchar(30) NOT NULL|카테고리 텍스트 색상|
 ||c_alpha|double NOT NULL|투명도|
 
 ```
@@ -49,6 +50,7 @@ create table tb_category (
     u_id varchar(50) comment '유저 아이디',
 	c_name varchar(30) not null comment '카테고리명',
 	c_color varchar(30) not null comment '카테고리 색상',
+	c_tcolor varchar(30) not null comment '카테고리 텍스트 색상',
 	c_alpha double not null comment '투명도',
 	primary key(c_id)
 );

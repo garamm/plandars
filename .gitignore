@@ -32,3 +32,5 @@ yarn-error.log*
 *.njsproj
 *.sln
 
+client/.eslintcache
+server/routes/config/db.js

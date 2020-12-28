@@ -8,12 +8,10 @@ const counterInitialState = {
 	mList: [], // 월
     value: 0,
     diff: 1,
-	contentType: 'month',
+	contentType: 'week',
 	date: '2020-12-01',
-	week: 1,
-	day: '일',
+	dateTitle: "",
 };
-const weeks = ['일', '월', '화', '수', '목', '금', '토'];
 
 function make2digit(value) {
 	if(Number(value) < 10) {
@@ -23,27 +21,55 @@ function make2digit(value) {
 	}
 }
 
-function setToSunday(dates) {
+function getSunday(dates) {
 	var days = dates.getDay();
 	dates.setDate(dates.getDate() - days);
 	return dates;
 }
 
+function findMonthStr(dateStr) { // 해당일이 몇년 몇월인지 확인
+    var splits = dateStr.split("-");
+    return splits[0]+"년 " + Number(splits[1])+"월";
+}
+
+function findWeekStr(dateStr) { // 해당일이 몇년 몇월 몇째주인지 확인
+    var splits = dateStr.split("-");
+    var dateObj = new Date(dateStr);
+    return splits[0]+"년 " + Number(splits[1])+"월 " + Math.ceil(dateObj.getDate() / 7)+"째주";
+}
+
+
+function makeDateStr(dateObj) {
+    let year = dateObj.getFullYear();
+	let month = make2digit(dateObj.getMonth() + 1);
+	let date = make2digit(dateObj.getDate());
+	return year+"-"+month+"-"+date;
+}
+
+
 function changeDate(state, action) {
+	console.log("changeDate");
 	var dateObj = new Date(action.date);
-	var weekObj = setToSunday(new Date(action.date));
+	var title = "";
+	if(state.contentType === "week") {
+	    title = findWeekStr(makeDateStr(getSunday(new Date(action.date))));
+	} else  if(state.contentType === "month") {
+	    title = findMonthStr(makeDateStr(dateObj));
+	}
+
 	return Object.assign({}, state, {
 		date: action.date,
-		week: Math.ceil(weekObj.getDate() / 7),
-		day: weeks[dateObj.getDay()],
-		wList: getWeekList(state, dateObj)
+		dateTitle: title,
+		wList: getWeekList(state, dateObj, null),
+		mList: getMonthList(state, dateObj, null),
 	});
 }
 
 function moveDate(state, action) {
+	console.log("moveDate");
 	var dateObj = null;
 	if(state.contentType === "week") {
-		dateObj = setToSunday(new Date(state.date));
+		dateObj = getSunday(new Date(state.date));
 	} else {
 		dateObj = new Date(state.date);
 	}
@@ -61,37 +87,43 @@ function moveDate(state, action) {
 			dateObj.setDate(dateObj.getDate() + 7);
 		}
 	}
-	let year = dateObj.getFullYear();
-	let month = make2digit(dateObj.getMonth() + 1);
-	let date = make2digit(dateObj.getDate());
-	var weekObj2 = setToSunday(new Date(dateObj));
+
+    var title = "";
+    if(state.contentType === "week") {
+		title = findWeekStr(makeDateStr(getSunday(dateObj)));
+    } else  if(state.contentType === "month") {
+        title = findMonthStr(makeDateStr(dateObj));
+    }
+
 	return Object.assign({}, state, {
-		date: year+"-"+month+"-"+date,
-		week: Math.ceil(weekObj2.getDate() / 7),
-		day: weeks[dateObj.getDay()],
-		wList: getWeekList(state, dateObj)
+		date: makeDateStr(dateObj),
+		dateTitle: title,
+		wList: getWeekList(state, dateObj, null),
+		mList: getMonthList(state, dateObj, null)
 	});
 }
 
 function changeMode(state, action) {
+	console.log("changeMode");
 	var dateObj = new Date();
-	
-	let year = dateObj.getFullYear();
-	let month = make2digit(dateObj.getMonth() + 1);
-	let dateStr = make2digit(dateObj.getDate());
-	
-	var weekObj = setToSunday(new Date());
+
+	var title = "";
+    if(action.contentType === "week") {
+        title = findWeekStr(makeDateStr(getSunday(dateObj)));
+    } else  if(action.contentType === "month") {
+        title = findMonthStr(makeDateStr(dateObj));
+    }
 	
 	return Object.assign({}, state, {
-		date: year+"-"+month+"-"+dateStr,
-		week: Math.ceil(weekObj.getDate() / 7),
-		day: weeks[dateObj.getDay()],
+		date: makeDateStr(dateObj),
+		dateTitle: title,
 		contentType: action.contentType,
-		wList: getWeekList(state, dateObj)
+		wList: getWeekList(state, dateObj, null),
+		mList: getMonthList(state, dateObj, null)
 	});
 }
 
-function getWeekList(state, date) {
+function getWeekList(state, date, plistData) {
 	var currentDay = new Date(date);  
 	var theYear = currentDay.getFullYear();
 	var theMonth = currentDay.getMonth();
@@ -111,8 +143,14 @@ function getWeekList(state, date) {
 
 		// 일정추가
 		var list = [];
-		for(var j=0; j<state.pList.length; j++) {
-			var item = state.pList[j];
+		var loopList;
+		if(plistData === null) {
+			loopList = state.pList;
+		} else {
+			loopList = plistData;
+		}
+		for(var j=0; j<loopList.length; j++) {
+			var item = loopList[j];
 			if(item.start === weekDate) {
 				list.push(item);
 			}
@@ -122,11 +160,50 @@ function getWeekList(state, date) {
 			list: list
 		})
 	}
-	console.log(thisWeek[0].list);
 	
 	return thisWeek;
 }
+//# 월간 달력 그리기 작업중
+function getMonthList(state, date, plistData) {
+	var currentDay = new Date(date);  
+	var theYear = currentDay.getFullYear();
+	var theMonth = currentDay.getMonth();
+	var theDate  = currentDay.getDate();
+	var theDayOfWeek = currentDay.getDay();
 
+	var thisWeek = [];
+	for(var i=0; i<7; i++) {
+		var resultDay = new Date(theYear, theMonth, theDate + (i - theDayOfWeek));
+		var yyyy = resultDay.getFullYear();
+		var mm = Number(resultDay.getMonth()) + 1;
+		var dd = resultDay.getDate();
+
+		mm = String(mm).length === 1 ? '0' + mm : mm;
+		dd = String(dd).length === 1 ? '0' + dd : dd;
+		var monthDate = yyyy + '-' + mm + '-' + dd;
+
+		// 일정추가
+		var list = [];
+		var loopList;
+		if(plistData === null) {
+			loopList = state.pList;
+		} else {
+			loopList = plistData;
+		}
+		for(var j=0; j<loopList.length; j++) {
+			var item = loopList[j];
+			if(item.start === monthDate) {
+				list.push(item);
+			}
+		}
+		thisMonth.push({
+			monthDate: monthDate,
+			list: list
+		})
+	}
+	
+	return thisMonth;
+}
 
 const counter = (state = counterInitialState, action) => {	
     switch(action.type) {
@@ -139,7 +216,8 @@ const counter = (state = counterInitialState, action) => {
 		case UPDATE_PLIST:
 			return Object.assign({}, state, {
 				pList: action.data,
-				wList: getWeekList(state, new Date(action.data))
+				wList: getWeekList(state, new Date(state.date), action.data),
+				mList: getMonthList(state, new Date(state.date), action.data)
 			});
         default:
             return state;

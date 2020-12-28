@@ -146,7 +146,7 @@ router.get('/added', function (req, res, next) {
 router.get('/', function (req, res, next) {
 	res.header("Content-Type", 'application/json');
 	//var select = "SELECT * FROM tb_holiday WHERE h_start LIKE ('"+req.query.year+"-%')";
-	var select = "SELECT * FROM tb_holiday";
+	var select = "SELECT * FROM tb_holiday h LEFT JOIN tb_category c ON h.c_id=c.c_id";
    connection.query(select, (error, rows, fields) => {
 		var jsonObj = new Object();
 		if (error) {
