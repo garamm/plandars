@@ -83,9 +83,9 @@ class Home extends React.Component {
 				<Header></Header>
 				<div className="flex_1 flex_row app_body">
 					<Content className="flex_1"></Content>
-					<span className={this.props.contentType === 'month' ? 'v_show' : 'v_hide'} >
+					{/* <span className={this.props.contentType === 'month' ? 'v_show' : 'v_hide'} >
 						<Menu className="pc_tablet"></Menu>
-					</span>
+					</span> */}
 				</div>
 			</div>
         );

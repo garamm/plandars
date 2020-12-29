@@ -8,7 +8,7 @@ const counterInitialState = {
 	mList: [], // 월
     value: 0,
     diff: 1,
-	contentType: 'week',
+	contentType: 'month',
 	date: '2020-12-01',
 	dateTitle: "",
 };
@@ -163,26 +163,43 @@ function getWeekList(state, date, plistData) {
 	
 	return thisWeek;
 }
-//# 월간 달력 그리기 작업중
+
 function getMonthList(state, date, plistData) {
-	var currentDay = new Date(date);  
-	var theYear = currentDay.getFullYear();
-	var theMonth = currentDay.getMonth();
-	var theDate  = currentDay.getDate();
-	var theDayOfWeek = currentDay.getDay();
+	var currentDay = new Date(date);
+	var currentYear = currentDay.getFullYear();
+	var currentMonth = currentDay.getMonth();
+	
+	var dayList = []; // 일자 리스트
+	var tempList = []; // 일자+일정 리스트
+	var thisMonth = []; // 일자+일정+주별로 자른 리스트
 
-	var thisWeek = [];
-	for(var i=0; i<7; i++) {
-		var resultDay = new Date(theYear, theMonth, theDate + (i - theDayOfWeek));
-		var yyyy = resultDay.getFullYear();
-		var mm = Number(resultDay.getMonth()) + 1;
-		var dd = resultDay.getDate();
+	// 이번달 일정 더하기
+    var firstDate = new Date(currentDay.getFullYear(), currentDay.getMonth(), 1);
+    var prevDate = new Date(currentDay.getFullYear(), currentDay.getMonth(), 1);
+    var lastDate = new Date(currentDay.getFullYear(), currentDay.getMonth()+1, 0);
 
-		mm = String(mm).length === 1 ? '0' + mm : mm;
-		dd = String(dd).length === 1 ? '0' + dd : dd;
-		var monthDate = yyyy + '-' + mm + '-' + dd;
+    // prev
+    var prevCnt = firstDate.getDay()
+    for(var i=0; i<prevCnt; i++) {
+	  prevDate.setDate(prevDate.getDate() - 1);
+	  dayList.push(makeDateStr(prevDate));
+    }
+    
+    for(var j=1; j<=lastDate.getDate(); j++) {
+	  dayList.push(currentYear+"-"+make2digit(currentMonth+1)+"-"+make2digit(j));
+    }
+    
+    // next
+    var nextCnt = 6 - lastDate.getDay();
+    for(var k=0; k<nextCnt; k++) {
+	  lastDate.setDate(lastDate.getDate() + 1);
+	  dayList.push(makeDateStr(lastDate));
+	}
+	dayList.sort(); // 일자 순서대로 정렬
 
-		// 일정추가
+	// 일정추가
+	for(var n=0; n<dayList.length; n++) {
+		var monthDate = dayList[n];
 		var list = [];
 		var loopList;
 		if(plistData === null) {
@@ -190,18 +207,48 @@ function getMonthList(state, date, plistData) {
 		} else {
 			loopList = plistData;
 		}
-		for(var j=0; j<loopList.length; j++) {
-			var item = loopList[j];
+		var isHoliday = false;
+		for(var m=0; m<loopList.length; m++) {
+			var item = loopList[m];
 			if(item.start === monthDate) {
 				list.push(item);
+				console.log(item);
+				if(item.cid === "00000001" && item.rest === "Y") { // 공휴일 표시
+					isHoliday = true;
+				}
 			}
 		}
-		thisMonth.push({
+		var type = "this"; // prev, this, next
+		if(monthDate.substr(0,7) < makeDateStr(currentDay).substr(0,7)) {
+			type = "prev";
+		}
+		if(monthDate.substr(0,7) > makeDateStr(currentDay).substr(0,7)) {
+			type = "next";
+		}
+
+		tempList.push({
 			monthDate: monthDate,
+			isHoliday: isHoliday,
+			type: type,
 			list: list
 		})
+		console.log(tempList);
 	}
-	
+
+	// 달력 모양 만들기
+	var weekCnt = 6;
+	if(tempList.length === 35) { // 이번달이 5주인 경우
+		weekCnt = 5;
+	}
+
+	for(var o=0; o<weekCnt; o++) {
+		thisMonth.push({
+			weekNo: o,
+			weekList: tempList.slice(o*7, (o+1)*7)
+		});
+	}
+
+	console.log(thisMonth);	
 	return thisMonth;
 }
 
