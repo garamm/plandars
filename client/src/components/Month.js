@@ -3,8 +3,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import MonthItem from './MonthItem.js';
 
+
 class Month extends React.Component {
-	
 	render() {
 		return (
 			<div className="Month">

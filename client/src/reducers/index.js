@@ -1,8 +1,9 @@
-import { CHANGE_CONTENT, CHANGE_DATE, MOVE_DATE, UPDATE_PLIST } from '../actions';
+import { CHANGE_CONTENT, CHANGE_DATE, MOVE_DATE, UPDATE_PLIST, OPEN_DETAILPOPUP } from '../actions';
 import { combineReducers } from 'redux';
 
 const counterInitialState = {
-	baseURL: "http://localhost:4000",
+	baseURL: "http://13.124.220.147:4000",
+	//baseURL: "http://localhost:4000",
 	pList: [], // 일정 리스트
 	wList: [], // 주
 	mList: [], // 월
@@ -11,6 +12,7 @@ const counterInitialState = {
 	contentType: 'month',
 	date: '2020-12-01',
 	dateTitle: "",
+	isOpenDetailPopup: false,
 };
 
 function make2digit(value) {
@@ -46,6 +48,10 @@ function makeDateStr(dateObj) {
 	return year+"-"+month+"-"+date;
 }
 
+function isMobile() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
 
 function changeDate(state, action) {
 	console.log("changeDate");
@@ -53,7 +59,7 @@ function changeDate(state, action) {
 	var title = "";
 	if(state.contentType === "week") {
 	    title = findWeekStr(makeDateStr(getSunday(new Date(action.date))));
-	} else  if(state.contentType === "month") {
+	} else if(state.contentType === "month") {
 	    title = findMonthStr(makeDateStr(dateObj));
 	}
 
@@ -265,6 +271,11 @@ const counter = (state = counterInitialState, action) => {
 				pList: action.data,
 				wList: getWeekList(state, new Date(state.date), action.data),
 				mList: getMonthList(state, new Date(state.date), action.data)
+			});
+		case OPEN_DETAILPOPUP: 
+			return Object.assign({}, state, {
+				isOpenDetailPopup: action.isOpen,
+				date: action.date
 			});
         default:
             return state;

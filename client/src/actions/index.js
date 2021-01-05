@@ -2,6 +2,7 @@ export const CHANGE_CONTENT = 'CHANGE_CONTENT';
 export const CHANGE_DATE = 'CHANGE_DATE';
 export const MOVE_DATE = 'MOVE_DATE';
 export const UPDATE_PLIST = 'UPDATE_PLIST';
+export const OPEN_DETAILPOPUP = 'OPEN_DETAILPOPUP';
 
 export function setContentType(value) {
 	return {
@@ -28,5 +29,13 @@ export function updatePlist(value) {
 	return {
 		type: UPDATE_PLIST,
 		data: value
+	}
+}
+
+export function setDetailPopup(value, value2) {
+	return {
+		type: OPEN_DETAILPOPUP,
+		isOpen: value,
+		date: value2
 	}
 }

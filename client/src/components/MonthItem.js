@@ -8,7 +8,7 @@ class MonthItem extends React.Component {
 			<div className="MonthItem">
 				{this.props.weekList.map((item, j) => {
 					return (
-						<div className={(item.type==='this' ? 'WeekItem' : 'WeekItem add_opacity')} key={j} >
+						<div className={(item.type==='this' ? 'WeekItem' : 'WeekItem add_opacity')} key={j}>							
 							<p style={{ margin: 5, color: item.isHoliday ? 'red' : ''  }}>{Number(item.monthDate.substr(8, 2))}</p>
 							{item.list.map((item2, k) => {
 								return (
@@ -36,4 +36,5 @@ class MonthItem extends React.Component {
 		);
 	}
 }
-export default MonthItem;
+
+export default MonthItem;  
