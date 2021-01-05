@@ -43,6 +43,7 @@ tb_category
 ||c_color|varchar(30) NOT NULL|카테고리 색상|
 ||c_tcolor|varchar(30) NOT NULL|카테고리 텍스트 색상|
 ||c_alpha|double NOT NULL|투명도|
+||c_radius|double NOT NULL|둥근정도|
 
 ```
 create table tb_category (
@@ -52,6 +53,7 @@ create table tb_category (
 	c_color varchar(30) not null comment '카테고리 색상',
 	c_tcolor varchar(30) not null comment '카테고리 텍스트 색상',
 	c_alpha double not null comment '투명도',
+	c_radius int(8) not null comment '둥근정도'
 	primary key(c_id)
 );
 ```

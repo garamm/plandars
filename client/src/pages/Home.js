@@ -1,5 +1,4 @@
 import Header from '../components/Header.js';
-import Menu from '../components/Menu.js';
 import Content from '../components/Content.js';
 
 import React from 'react';
@@ -14,8 +13,6 @@ function make2digit(value) {
 		return value;
 	}
 }
-
-
 
 class Home extends React.Component {	
 	
@@ -42,6 +39,7 @@ class Home extends React.Component {
 							ccolor: item.c_color, // 카테고리 색상
 							ctcolor: item.c_tcolor, // 카테고리 텍스트 색상
 							calpha: item.c_alpha, // 카테고리 투명도
+							cradius: item.c_radius, // 카테고리 둥근정도
 							gid: "", // 휴일은 그룹아이디 공백
 							start: item.h_start,
 							end: item.h_end,
@@ -62,7 +60,7 @@ class Home extends React.Component {
 			}
 		})
 		.catch( error => {
-			alert("휴일 데이터를 가져올 수 없습니다(2)");
+			alert("휴일 데이터를 가져올 수 없습니다(서버 접속 오류)");
 			console.log(error);
 		});		
 	}

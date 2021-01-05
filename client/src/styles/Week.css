@@ -9,6 +9,11 @@
 	padding: 5px;
 }
 
+.weekWidth {
+	width: auto;
+	margin-bottom: 5px;
+}
+
 /* Extra small devices (phones, 600px and down) */
 @media screen and (max-width: 600px) {
 	.Week {
@@ -22,6 +27,11 @@
 	.Week > div:nth-last-child(1) {
 		border-bottom: 0px;
 	}
+
+	.weekWidth {
+		width: auto;
+	}
+
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media screen and (min-width: 600px) {
@@ -36,6 +46,10 @@
 	.Week > div:nth-last-child(1) {
 		border-bottom: 0px;
 	}
+
+	.weekWidth {
+		width: auto;
+	}
 }
 /* Medium devices (landscape tablets, 768px and up) */
 @media screen and (min-width: 768px) {
@@ -46,6 +60,15 @@
 	.Week > div {
 		border-right: 1px solid #E5E5E5;
 		border-bottom: 0px;
+	}
+
+	.Week > div:nth-last-child(1) {
+		border-right: 0px;
+	}
+
+	.weekWidth {
+		display: inline-block;
+		width: calc(100% - 5px);
 	}
 }
 /* Large devices (laptops/desktops, 992px and up) */
@@ -62,6 +85,11 @@
 	.Week > div:nth-last-child(1) {
 		border-right: 0px;
 	}
+
+	.weekWidth {
+		display: inline-block;
+		width: calc(100% - 5px);
+	}
 }
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media screen and (min-width: 1200px) {
@@ -76,5 +104,10 @@
 	
 	.Week > div:nth-last-child(1) {
 		border-right: 0px;
+	}
+
+	.weekWidth {
+		display: inline-block;
+		width: calc(100% - 5px);
 	}
 }
