@@ -71,14 +71,60 @@ class Home extends React.Component {
 						lon: "",
 						rest: item.h_rest, // 휴일 YN
 					});
-				}
-				this.props.updatePlist(list);
+                }
+                this.getCalendarData(list);
 			} else {
 				alert("휴일 데이터를 가져올 수 없습니다.");
 				}
 			}
 		}).catch((error) => {
 			alert("휴일 데이터를 가져올 수 없습니다(서버 접속 오류)");
+			console.log(error);
+		});
+    }
+    
+    getCalendarData(list) {
+		axios.get(this.props.baseURL + "/calendar", {
+			params: {u_id: this.props.userId},
+		}).then((response) => {
+			if (response.status !== 200) {
+				alert("일정 데이터를 가져올 수 없습니다(1)");
+			} else {
+				console.log("일정 데이터 조회 완료");
+				var json = response.data;
+				console.log(json);
+				if (json.resultCode === 200) {
+				for (var i = 0; i < json.resultData.length; i++) {
+                    var item = json.resultData[i];
+					list.push({
+						sid: item.s_id,
+						title: item.s_title,
+						cid: item.c_id,
+						cname: item.c_name, // 카테고리명
+						ccolor: item.c_color, // 카테고리 색상
+						ctcolor: item.c_tcolor, // 카테고리 텍스트 색상
+						calpha: item.c_alpha, // 카테고리 투명도
+						cradius: item.c_radius, // 카테고리 둥근정도
+						gid: item.s_gid,
+						start: item.s_start,
+						end: item.s_end,
+						lunar: item.s_lunar,
+						type: item.s_type,
+						chk: item.s_chk,
+						memo: item.s_memo,
+						addr: item.s_addr,
+						lat: item.s_lat,
+						lon: item.s_lon,
+						rest: "N"
+					});
+                }
+				this.props.updatePlist(list);
+			} else {
+				alert("일정 데이터를 가져올 수 없습니다.");
+				}
+			}
+		}).catch((error) => {
+			alert("일정 데이터를 가져올 수 없습니다(서버 접속 오류)");
 			console.log(error);
 		});
 	}
@@ -143,7 +189,8 @@ let mapStateToProps = (state) => {
     date: state.counter.date,
     baseURL: state.counter.baseURL,
 	pList: state.counter.pList,
-	isOpenDetailPopup: state.counter.isOpenDetailPopup
+    isOpenDetailPopup: state.counter.isOpenDetailPopup,
+    userId: state.counter.userId
   };
 };
 

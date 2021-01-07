@@ -58,6 +58,12 @@ a:hover {
 .ic_ml {
 	margin-left: 1rem;
 }
+
+.planFont {
+    font-size: 12px;
+    padding: 3px;
+}
+
 /* Extra small devices (phones, 600px and down) */
 @media screen and (max-width: 600px) {
 	.phone {
@@ -65,7 +71,11 @@ a:hover {
 	}
 	.pc_tablet {
 		display: none !important;
-	}
+    }    
+    .planFont {
+        font-size: 12px;
+        padding: 3px;
+    }
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media screen and (min-width: 600px) {
@@ -74,7 +84,11 @@ a:hover {
 	}
 	.pc_tablet {
 		display: none !important;
-	}
+    }    
+    .planFont {
+        font-size: 12px;
+        padding: 3px;
+    }
 }
 /* Medium devices (landscape tablets, 768px and up) */
 @media screen and (min-width: 768px) {
@@ -83,7 +97,11 @@ a:hover {
 	}
 	.pc_tablet {
 		display: block !important;
-	}
+    }    
+    .planFont {
+        font-size: 15px;
+        padding: 5px;
+    }
 }
 /* Large devices (laptops/desktops, 992px and up) */
 @media screen and (min-width: 992px) {
@@ -92,7 +110,11 @@ a:hover {
 	}
 	.pc_tablet {
 		display: block !important;
-	}
+    }    
+    .planFont {
+        font-size: 15px;
+        padding: 5px;
+    }
 }
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media screen and (min-width: 1200px) {
@@ -101,7 +123,11 @@ a:hover {
 	}
 	.pc_tablet {
 		display: block !important;
-	}
+    }    
+    .planFont {
+        font-size: 15px;
+        padding: 5px;
+    }
 }
 
 .ml_10 {
@@ -156,3 +182,4 @@ a:hover {
 	float: right;
 }
 /* float 관련 끝 */
+

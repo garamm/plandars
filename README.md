@@ -72,8 +72,8 @@ tb_schedule
 ||s_start|char(10) NOT NULL|일정 시작일|
 ||s_end|char(10) NOT NULL|일정 종료일|
 ||s_lunar|char(10) NOT NULL|음력인 경우 일자 기입|
-||s_type|varchar(30) NOT NULL|일정/체크리스트|
-||s_chk|char(1) NOT NULL|(체크리스트인 경우) 체크유무 Y/N|
+||s_type|varchar(30) NOT NULL|일정/체크|
+||s_chk|char(1) NOT NULL|(체크인 경우) 체크유무 Y/N|
 ||s_memo|varchar(200)|일정 메모|
 ||s_addr|varchar(30)|일정 주소|
 ||s_lat|varchar(30)|일정 주소 위도|
@@ -90,7 +90,7 @@ create table tb_schedule (
 	s_start char(10) not null comment '일정 시작일',
 	s_end char(10) not null comment '일정 종료일',
 	s_lunar char(10) not null comment '음력인 경우 일자 기입',
-	s_type varchar(30) not null comment '일정/체크리스트',
+	s_type varchar(30) not null comment '일정/체크',
 	s_chk char(1) not null comment '체크유무 Y/N',
 	s_memo varchar(200) comment '일정 메모',
 	s_addr varchar(30) comment '일정 주소',
