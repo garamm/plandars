@@ -51,7 +51,12 @@ a:hover {
 
 .ic_width {
 	height: 30px;
-	width: 48px;
+	width: auto;
+	padding: 0px;
+}
+
+.ic_ml {
+	margin-left: 1rem;
 }
 /* Extra small devices (phones, 600px and down) */
 @media screen and (max-width: 600px) {

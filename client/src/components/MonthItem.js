@@ -12,7 +12,7 @@ class MonthItem extends React.Component {
 							<p style={{ margin: 5, color: item.isHoliday ? 'red' : ''  }}>{Number(item.monthDate.substr(8, 2))}</p>
 							{item.list.map((item2, k) => {
 								return (
-									<p key={k} style={{margin: 5, padding: 3, backgroundColor: item2.ccolor, color: item2.ctcolor, borderRadius: item2.cradius}} >{item2.title}</p>
+									<p key={k} style={{fontSize: 10, margin: 5, padding: 3, backgroundColor: item2.ccolor, color: item2.ctcolor, borderRadius: item2.cradius}} >{item2.title}</p>
 								);
 							})}
 							

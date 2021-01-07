@@ -2,8 +2,8 @@ import { CHANGE_CONTENT, CHANGE_DATE, MOVE_DATE, UPDATE_PLIST, OPEN_DETAILPOPUP 
 import { combineReducers } from 'redux';
 
 const counterInitialState = {
-	baseURL: "http://13.124.220.147:4000",
-	//baseURL: "http://localhost:4000",
+	//baseURL: "http://13.124.220.147:4000",
+	baseURL: "https://plandars-apis.run.goorm.io",
 	pList: [], // 일정 리스트
 	wList: [], // 주
 	mList: [], // 월
@@ -46,10 +46,6 @@ function makeDateStr(dateObj) {
 	let month = make2digit(dateObj.getMonth() + 1);
 	let date = make2digit(dateObj.getDate());
 	return year+"-"+month+"-"+date;
-}
-
-function isMobile() {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 
 

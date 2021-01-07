@@ -8,7 +8,7 @@ class WeekItem extends React.Component {
 				<p style={{marginTop: 0, marginBottom: 5}}>{this.props.weekDate}</p>
 				{this.props.list.map((item, i) => {
 					return (
-						<span key="i" className="weekWidth" style={{padding: 3, backgroundColor: item.ccolor, color: item.ctcolor, borderRadius: item.cradius}} >{item.title}</span>
+						<span key="i" className="weekWidth" style={{fontSize: 10, padding: 3, backgroundColor: item.ccolor, color: item.ctcolor, borderRadius: item.cradius}} >{item.title}</span>
 					);
 				})}
 				{/* // weekDate={weekDate} sid={item.sid} title={item.title}

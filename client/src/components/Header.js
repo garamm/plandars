@@ -37,16 +37,16 @@ class Header extends React.Component {
 								<img className="t_subtitle c_black d_ib" src="/imgs/ic_week.svg" alt="ic_week"></img>
 							</button>
 						</span>
-						<span className={this.props.contentType === 'check' ? 'ic_show' : 'ic_hide'} >
+						{/*<span className={this.props.contentType === 'check' ? 'ic_show' : 'ic_hide'} >
 							<button className="t_subtitle rm_btn ic_width" onClick={() => this.props.setContent('check') }>
 								<img className="t_subtitle c_black d_ib" src="/imgs/ic_check.svg" alt="ic_check"></img>
 							</button>
-						</span>
+						</span>*/}
 
-						<button className="t_subtitle rm_btn ic_width">
+						<button className="t_subtitle rm_btn ic_width ic_ml">
 							<img className="t_subtitle c_black d_ib" src="/imgs/ic_add.svg" alt="ic_add"></img>
 						</button>
-						<button className="t_subtitle float_r rm_btn ic_width">
+						<button className="t_subtitle float_r rm_btn ic_width ic_ml">
 							<img className="t_subtitle c_black d_ib" src="/imgs/ic_logout.svg" alt="ic_logout"></img>
 						</button>
 					</div>

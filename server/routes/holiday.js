@@ -54,16 +54,16 @@ router.get('/add', function (req, res, next) {
 		insert += ",('성탄절', '00000001', '"+i+"-12-25', '"+i+"-12-25', '', 'Y')";
 		
 		// 석가탄신일(음력 4월 8일) 추가
-		insert += ",('석가탄신일', '00000001', '"+i+"-"+LunarCalendar.lunarToSolar(i+'0408')+"', '"+i+"-"+LunarCalendar.lunarToSolar(i+'0408')+"', '0408', 'Y')";
+		insert += ",('석가탄신일', '00000001', '"+i+"-"+LunarCalendar.lunarToSolar(i+'0408')+"', '"+i+"-"+LunarCalendar.lunarToSolar(i+'0408')+"', '"+i+"-04-08', 'Y')";
 
 		// 설날(음력 1월 1일과 전후 이틀) 추가
 		var newYearStr = i+"-"+LunarCalendar.lunarToSolar(i+'0101');
 		var newYearDate = new Date(newYearStr);
 		var prevNewYearStr = LunarCalendar.getFormatDate(newYearDate.setDate(newYearDate.getDate() - 1));
 		var nextNewYearStr = LunarCalendar.getFormatDate(newYearDate.setDate(newYearDate.getDate() + 2));
-		insert += ",('설날연휴', '00000001', '"+prevNewYearStr+"', '"+prevNewYearStr+"', '0101', 'Y')";
-		insert += ",('설날', '00000001', '"+newYearStr+"', '"+newYearStr+"', '0101', 'Y')";
-		insert += ",('설날연휴', '00000001', '"+nextNewYearStr+"', '"+nextNewYearStr+"', '0101', 'Y')";
+		insert += ",('설날연휴', '00000001', '"+prevNewYearStr+"', '"+prevNewYearStr+"', '', 'Y')";
+		insert += ",('설날', '00000001', '"+newYearStr+"', '"+newYearStr+"', '"+i+"-01-01', 'Y')";
+		insert += ",('설날연휴', '00000001', '"+nextNewYearStr+"', '"+nextNewYearStr+"', '', 'Y')";
 		
 		
 		// 추석(음력 8월 15일과 전후 이틀) 추가
@@ -71,9 +71,9 @@ router.get('/add', function (req, res, next) {
 		var chuseokDate = new Date(chuseokStr);
 		var prevChuseokStr = LunarCalendar.getFormatDate(chuseokDate.setDate(chuseokDate.getDate() - 1));
 		var nextChuseokStr = LunarCalendar.getFormatDate(chuseokDate.setDate(chuseokDate.getDate() + 2));
-		insert += ",('추석연휴', '00000001', '"+prevChuseokStr+"', '"+prevChuseokStr+"', '0815', 'Y')";
-		insert += ",('추석', '00000001', '"+chuseokStr+"', '"+chuseokStr+"', '0815', 'Y')";
-		insert += ",('추석연휴', '00000001', '"+nextChuseokStr+"', '"+nextChuseokStr+"', '0815', 'Y')";
+		insert += ",('추석연휴', '00000001', '"+prevChuseokStr+"', '"+prevChuseokStr+"', '', 'Y')";
+		insert += ",('추석', '00000001', '"+chuseokStr+"', '"+chuseokStr+"', '"+i+"-08-15', 'Y')";
+		insert += ",('추석연휴', '00000001', '"+nextChuseokStr+"', '"+nextChuseokStr+"', '', 'Y')";
 		
 		
 		// 대체공휴일 정의
