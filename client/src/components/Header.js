@@ -13,10 +13,10 @@ class Header extends React.Component {
 					<button className="t_subtitle rm_btn ic_width" onClick={() => this.props.moveDate('prev') }>
 						<img className="t_subtitle c_black d_ib" src="/imgs/ic_prev.svg" alt="ic_prev"></img>
 					</button>
-					<span className={this.props.contentType === 'month' ? 'v_show' : 'v_hide'} >
+					<span className={this.props.contentType === 'month' ? 'v_show title_date' : 'v_hide title_date'} >
 						{ this.props.dateTitle }
 					</span>
-					<span className={this.props.contentType === 'week' ? 'v_show' : 'v_hide'} >
+					<span className={this.props.contentType === 'week' ? 'v_show title_date' : 'v_hide title_date'} >
 						{ this.props.dateTitle }
 					</span>
 					<button className="t_subtitle rm_btn ic_width" onClick={() => this.props.moveDate('next') }>
@@ -59,11 +59,9 @@ class Header extends React.Component {
 							<img className="t_subtitle c_black d_ib" src="/imgs/ic_logout.svg" alt="ic_logout"></img>
 						</button>
 					</div>
-
-
 				</div>
-
 			</div>
+			
 		);
 	}
 }

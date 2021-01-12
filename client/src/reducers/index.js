@@ -2,8 +2,8 @@ import { CHANGE_CONTENT, CHANGE_DATE, MOVE_DATE, UPDATE_PLIST, OPEN_DETAILPOPUP 
 import { combineReducers } from 'redux';
 
 const counterInitialState = {
-	baseURL: "http://13.124.220.147:4000",
-    // baseURL: "https://plandars-apis.run.goorm.io",
+	//baseURL: "http://13.124.220.147:4000",
+    baseURL: "https://plandars-apis.run.goorm.io",
     userId: "admin",
 	pList: [], // 일정 리스트
 	wList: [], // 주
