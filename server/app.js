@@ -13,11 +13,11 @@ var holidayRouter = require('./routes/holiday.js');
 // CORS 설정
 app.use(cors());
 
-app.use('/', indexRouter);
-app.use('/login', loginRouter);
-app.use('/calendar', calendarRouter);
-app.use('/category', categoryRouter);
-app.use('/holiday', holidayRouter);
+app.use('/api', indexRouter);
+app.use('/api/login', loginRouter);
+app.use('/api/calendar', calendarRouter);
+app.use('/api/category', categoryRouter);
+app.use('/api/holiday', holidayRouter);
 
 server.listen(4000, '0.0.0.0', function () {
     console.log('Server listen on port ' + server.address().port);
