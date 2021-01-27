@@ -13,7 +13,7 @@ var holidayRouter = require('./routes/holiday.js');
 // CORS 설정
 app.use(cors());
 
-app.use('/api', indexRouter);
+app.use('/', indexRouter);
 app.use('/api/login', loginRouter);
 app.use('/api/calendar', calendarRouter);
 app.use('/api/category', categoryRouter);

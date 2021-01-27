@@ -7,12 +7,12 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
+      path: '/login',
       name: 'login-page',
       component: require('@/pages/LoginPage').default
     },
     {
-      path: '/main',
+      path: '/',
       name: 'main-page',
       component: require('@/pages/MainPage').default
     },
